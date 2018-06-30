@@ -1,0 +1,5 @@
+<mat-accordion>
+  <ng-container *ngFor="let exercise of exercises">
+    <app-exercise-list-item [exercise]="exercise"></app-exercise-list-item>
+  </ng-container>
+</mat-accordion>

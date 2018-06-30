@@ -1,0 +1,18 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ exercise.name }}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{ description }}
+      <mat-icon>{{ icon }}</mat-icon>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <p>
+    Sets: {{ exercise.sets }}
+    Reps: {{ exercise.reps }}
+    Weight: {{ exercise.weight }}
+    Created: {{ exercise.createdAt }}
+    Updated: {{ exercise.updatedAt }}
+  </p>
+</mat-expansion-panel>
