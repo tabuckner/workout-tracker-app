@@ -3,16 +3,35 @@
     <mat-panel-title>
       {{ exercise.name }}
     </mat-panel-title>
-    <mat-panel-description>
+    <!-- <mat-panel-description>
       {{ description }}
       <mat-icon>{{ icon }}</mat-icon>
-    </mat-panel-description>
+    </mat-panel-description> -->
   </mat-expansion-panel-header>
-  <p>
-    Sets: {{ exercise.sets }}
-    Reps: {{ exercise.reps }}
-    Weight: {{ exercise.weight }}
-    Created: {{ exercise.createdAt }}
-    Updated: {{ exercise.updatedAt }}
-  </p>
+  <mat-list>
+    <mat-list-item>
+      <span class="title">Sets</span>
+      {{ exercise.sets }}
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <span class="title">Reps</span>
+      <span class="value">{{ exercise.reps }}</span>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <span class="title">Weight</span>
+      <span class="value">{{ exercise.weight }}</span>
+    </mat-list-item>
+    <!-- <mat-divider></mat-divider> -->
+  </mat-list>
+  <!-- <ul>
+    <li><strong>Sets: </strong>{{ exercise.sets }}</li>
+    <li><strong>Reps: </strong>{{ exercise.reps }}</li>
+    <li><strong>Weight: </strong>{{ exercise.weight }}</li>
+  </ul> -->
+  <div class="date-info">
+    <span class="muted" *ngIf="exercise.createdAt">Created: {{ exercise.createdAt | date:'medium' }}</span>
+    <span class="muted" *ngIf="exercise.updatedAt">Updated: {{ exercise.updatedAt | date:'medium' }}</span>
+  </div>
 </mat-expansion-panel>

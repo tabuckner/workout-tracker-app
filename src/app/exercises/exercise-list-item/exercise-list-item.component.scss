@@ -8,3 +8,39 @@
     align-items: center;
   }
 }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 4px 0;
+  }
+}
+
+.mat-list-item {
+  display: flex;
+
+  .title {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  .value {
+    flex: 0;
+  }
+}
+
+.date-info {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .8rem;
+  text-align: center;
+  margin-top: .75rem;
+  opacity: .66;
+
+  span {
+    flex: 0 0 100%;
+  }
+}

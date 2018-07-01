@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Exercise, ExerciseResponse } from '../../shared/models/exercise.model';
+import { Exercise, ExerciseResponse, NewExercise } from '../../shared/models/exercise.model';
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -38,6 +38,18 @@ export class ApiService {
       this.exercisesUpdated.next(
         [...this.exercises]
       );
+    });
+  }
+
+  addExercise(newExercise: NewExercise) {
+    const endpoint = `${this.baseUrl}/exercises`
+
+    console.log(newExercise);
+    this.http.post<{message: string, status: number, data: ExerciseResponse}>(endpoint, newExercise)
+    .subscribe(response => {
+      const message = response.message; // TODO: Add snackbar/popup
+      const createdExercise = response.data;
+      console.log(response);
     });
   }
 }

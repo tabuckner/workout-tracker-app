@@ -19,3 +19,10 @@ export class Exercise { // TODO: Is this really necessary
   updatedAt?: string;
   v?: number;
 }
+
+export class NewExercise {
+  name: string;
+  sets: number;
+  reps: number;
+  weight: number;
+}

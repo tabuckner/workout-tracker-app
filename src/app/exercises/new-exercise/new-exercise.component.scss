@@ -1,12 +1,11 @@
-.new-exercise {
-  .mat-expansion-panel-header {
-    &-title {
-      flex-basis: 0;
-    }
-    &-description {
-      flex-basis: 0;
-      justify-content: space-between;
-      align-items: center;
-    }
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-card-actions {
+  display: flex;
+
+  .spacer {
+    flex: 1;
   }
 }

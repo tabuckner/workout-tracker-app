@@ -8,7 +8,7 @@ import { ExerciseListComponent } from './exercise-list/exercise-list.component';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [
     NewExerciseComponent,

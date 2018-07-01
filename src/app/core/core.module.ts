@@ -1,9 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { ApiService } from './api/api.service';
+import { HeaderService } from './header/header.service';
 
 @NgModule({
   providers: [
     ApiService,
+    HeaderService
   ]
 })
 export class CoreModule {

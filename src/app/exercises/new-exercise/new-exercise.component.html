@@ -1,1 +1,46 @@
-<p>New Exercise Works</p>
+<mat-card>
+  <mat-card-title>Create Exercise</mat-card-title>
+  <mat-card-subtitle>Enter the information below.</mat-card-subtitle>
+  <mat-card-content>
+    <form [formGroup]="form" (submit)="onSubmit()">
+      <mat-form-field>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Exercise Name"
+          matInput>
+        <mat-error *ngIf="form.get('name').invalid">Please enter an exercise name.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="tel"
+          formControlName="sets"
+          placeholder="Sets"
+          matInput>
+        <mat-error *ngIf="form.get('sets').invalid">Please enter a number of sets.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="tel"
+          formControlName="reps"
+          placeholder="Reps"
+          matInput>
+        <mat-error *ngIf="form.get('reps').invalid">Please enter a number of reps.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="tel"
+          formControlName="weight"
+          placeholder="Weight"
+          matInput>
+        <mat-error *ngIf="form.get('weight').invalid">Please enter a weight to be used.</mat-error>
+      </mat-form-field>
+    </form>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <span class="spacer"></span>
+    <button mat-button>Cancel</button>
+    <button mat-raised-button color="accent" (click)="onSubmit()">Save</button>
+  </mat-card-actions>
+</mat-card>
