@@ -3,33 +3,23 @@
     <mat-panel-title>
       {{ exercise.name }}
     </mat-panel-title>
-    <!-- <mat-panel-description>
-      {{ description }}
-      <mat-icon>{{ icon }}</mat-icon>
-    </mat-panel-description> -->
   </mat-expansion-panel-header>
   <mat-list>
-    <mat-list-item>
+    <mat-list-item class="stats">
       <span class="title">Sets</span>
-      {{ exercise.sets }}
+      <span class="value">{{ exercise.sets }}</span>
     </mat-list-item>
     <mat-divider></mat-divider>
-    <mat-list-item>
+    <mat-list-item class="stats">
       <span class="title">Reps</span>
       <span class="value">{{ exercise.reps }}</span>
     </mat-list-item>
     <mat-divider></mat-divider>
-    <mat-list-item>
+    <mat-list-item class="stats">
       <span class="title">Weight</span>
       <span class="value">{{ exercise.weight }}</span>
     </mat-list-item>
-    <!-- <mat-divider></mat-divider> -->
   </mat-list>
-  <!-- <ul>
-    <li><strong>Sets: </strong>{{ exercise.sets }}</li>
-    <li><strong>Reps: </strong>{{ exercise.reps }}</li>
-    <li><strong>Weight: </strong>{{ exercise.weight }}</li>
-  </ul> -->
   <div class="date-info">
     <span class="muted" *ngIf="exercise.createdAt">Created: {{ exercise.createdAt | date:'medium' }}</span>
     <span class="muted" *ngIf="exercise.updatedAt">Updated: {{ exercise.updatedAt | date:'medium' }}</span>

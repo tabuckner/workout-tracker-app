@@ -1,20 +1,5 @@
-<mat-toolbar color="primary">
-  <div class="app-icon--header">
-    <a routerLink="/">
-      <img src="assets/workout-tracker-icon.png" alt="App Icon" height="100%">
-    </a>
-  </div>
-  <span>
-    Workout Tracker
-  </span>
-
-  <!-- This fills the remaining space of the current row -->
-  <span class="header-spacer"></span>
-
-  <button mat-icon-button>
-    <mat-icon aria-label="Add New Exercise" routerLink="/create-exercise">add</mat-icon>
-  </button>
-</mat-toolbar>
+<nav>
+  <router-outlet></router-outlet>
+</nav>
 
 <!-- <app-new-exercise></app-new-exercise> -->
-<router-outlet></router-outlet>

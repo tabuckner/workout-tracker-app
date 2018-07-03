@@ -8,8 +8,8 @@ import { Exercise } from '../../shared/models/exercise.model';
 })
 export class ExerciseListItemComponent implements OnInit {
   @Input() exercise: Exercise;
-  description: string = 'Define a Desc';
-  icon: string = 'help';
+  description: string = 'Define a Desc'; // TODO: Do we need?
+  icon: string = 'help'; // TODO: Do we need?
 
   constructor() { }
 

@@ -1,0 +1,37 @@
+.routine-list.mat-accordion {
+  .mat-expansion-panel-header {
+    font-size: 18px;
+  }
+  .mat-list {
+    padding-top: 0;
+  }
+
+  .mat-list-item {
+    height: 36px;
+  }
+
+  .exercise-name {
+    opacity: .66;
+    margin-right: 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .exercise-volume {
+    margin-left: 8px;
+    white-space: nowrap;
+  }
+
+  .sets {
+    color: blue;
+  }
+
+  .reps {
+    color: green;
+  }
+
+  .weight {
+    color: red;
+  }
+}
