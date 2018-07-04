@@ -1,0 +1,19 @@
+.mat-form-field {
+  width: 100%;
+}
+
+.info {
+  opacity: .66;
+}
+
+.mat-selection-list .mat-list-option .mat-line:nth-child(n+2) {
+  font-size: 12px;
+}
+
+.mat-card-actions {
+  display: flex;
+
+  .spacer {
+    flex: 1;
+  }
+}

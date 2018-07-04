@@ -26,18 +26,12 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Workout Tracker</span>
+      <span>{{ reactiveTitle }}</span>
+      <span class="header-spacer"></span>
+      <button mat-icon-button *ngIf="showAddButton" [routerLink]="createNewPath">
+        <mat-icon aria-label="create new">add</mat-icon>
+      </button>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!-- <mat-toolbar color="primary">
-  <div class="app-icon--header">
-    <a routerLink="/">
-      <img src="assets/workout-tracker-icon.png" alt="App Icon" height="100%">
-    </a>
-  </div>
-  <span>
-    Workout Tracker
-  </span> -->

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Exercise, ExerciseResponse, NewExercise } from '../../shared/models/exercise.model';
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Routine, RoutineResponse } from '../../shared/models/routine.model';
+import { Routine, RoutineResponse, NewRoutine } from '../../shared/models/routine.model';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +89,18 @@ export class ApiService {
       this.routinesUpdated.next(
         [...this.routines]
       );
+    });
+  }
+
+  addRoutine(newRoutine: NewRoutine) {
+    const endpoint = `${this.baseUrl}/routines`
+
+    console.log(newRoutine);
+    this.http.post<{message: string, status: number, data: ExerciseResponse}>(endpoint, newRoutine)
+    .subscribe(response => {
+      const message = response.message; // TODO: Add snackbar/popup
+      const createdExercise = response.data;
+      console.log(response);
     });
   }
 }

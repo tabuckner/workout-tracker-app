@@ -22,7 +22,5 @@ export class Routine {
 
 export class NewRoutine {
   name: string;
-  sets: number;
-  reps: number;
-  weight: number;
+  exercises: string[]; // Array of IDs
 }

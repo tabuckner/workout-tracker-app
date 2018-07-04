@@ -4,12 +4,14 @@ import { HomeComponent } from './home/home.component';
 import { RoutineListComponent } from './routines/routine-list/routine-list.component';
 import { ExerciseListComponent } from './exercises/exercise-list/exercise-list.component';
 import { NewExerciseComponent } from './exercises/new-exercise/new-exercise.component';
+import { NewRoutineComponent } from './routines/new-routine/new-routine.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'routines', component: RoutineListComponent},
-  { path: 'exercises', component: ExerciseListComponent},
-  { path: 'create-exercise', component: NewExerciseComponent}
+  { path: '', component: HomeComponent },
+  { path: 'routines', component: RoutineListComponent },
+  { path: 'routines/create', component: NewRoutineComponent }, // Add Lazy Routing to create component routes.
+  { path: 'exercises', component: ExerciseListComponent },
+  { path: 'exercises/create', component: NewExerciseComponent } // Add Lazy Routing to create component routes.
 ]
 
 @NgModule({

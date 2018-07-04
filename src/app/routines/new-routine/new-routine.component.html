@@ -1,3 +1,29 @@
-<p>
-  new-routine works!
-</p>
+<mat-card>
+  <mat-card-title>Create Routine</mat-card-title>
+  <mat-card-subtitle>Enter the information below.</mat-card-subtitle>
+  <mat-card-content>
+
+    <form [formGroup]="form" (submit)="onSubmit()">
+      <mat-form-field>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Routine Name"
+          matInput>
+        <mat-error *ngIf="form.get('name').invalid">Please enter a routine name.</mat-error>
+      </mat-form-field>
+      <mat-selection-list #exerciseSelections formControlName="exercises">
+        <mat-list-option *ngFor="let exercise of exercises" [value]="exercise.id">
+          <h4 mat-line>{{ exercise.name }}</h4>
+          <p mat-line class="info">Updated: {{ exercise.updatedAt | date:'short' }}</p>
+        </mat-list-option>
+      </mat-selection-list>
+    </form>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <span class="spacer"></span>
+    <button mat-button routerLink="/routines">Cancel</button>
+    <button mat-raised-button color="accent" (click)="onSubmit(exerciseSelections)">Save</button>
+  </mat-card-actions>
+</mat-card>
