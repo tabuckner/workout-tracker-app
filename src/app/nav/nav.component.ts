@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HeaderService } from '../core/header/header.service';
+import { AuthService } from '../core/auth/auth.service';
 
 @Component({
   selector: 'nav',
@@ -23,7 +24,8 @@ export class NavComponent implements OnInit, OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private header: HeaderService
+    private header: HeaderService,
+    private auth: AuthService
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,10 @@ export class NavComponent implements OnInit, OnDestroy {
           this.createNewPath = `${e.which}/create`
         }
       })
+  }
+
+  onLogOut() {
+    this.auth.logOut();
   }
 
   ngOnDestroy() {

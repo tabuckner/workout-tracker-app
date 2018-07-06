@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthResponse } from './AuthData.model';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private snacks: MatSnackBar
   ) { }
 
   getToken() {
@@ -46,12 +48,13 @@ export class AuthService {
   }
 
   logIn(email: string, password: string) {
-    const creds = {email, password};
+    const creds = { email, password };
     this.http
-      .post<{message: string, token: string, expiresIn: number, userId: string}>(`${this.baseUrl}/users/login`, creds)
-      .subscribe( response => {
+      .post<{ message: string, token: string, expiresIn: number, userId: string }>(`${this.baseUrl}/users/login`, creds)
+      .subscribe(response => {
         if (response.token) {
-          const message = response.message; // TODO: Add snackbar
+          const message = response.message;
+          this.showDialog(message);
           this.setAuthData(response);
           this.setAuthTimer(response);
           this.isAuthenticated = true;
@@ -70,20 +73,23 @@ export class AuthService {
     this.clearAuthData();
     this.router.navigate(['/']);
     clearTimeout(this.tokenTimer);
+    const message = 'Successfully logged out.';
+    this.showDialog(message);
   }
 
   promptExpiredToken() {
     this.tokenExpired = true;
-    const message = 'Your token has expired. Please log in.' // TODO: Add snackbar.
+    const message = 'Your session expired. Please log in.';
+    this.showDialog(message, 10000);
     clearTimeout(this.tokenTimer);
   }
 
   private setAuthTimer(response: AuthResponse) {
     this.tokenTimer = setTimeout(() => {
-      // this.logOut(); // FIXME: JWT Refreshes
+      this.logOut(); // FIXME: JWT Refreshes
       this.promptExpiredToken();
-    }, response.expiresIn * 1000); // Server returns an expiry *duration*
-  }
+      }, response.expiresIn * 1000); // Server returns an expiry *duration*
+    }
 
   private setAuthData(response: AuthResponse) {
     this.userId = response.userId;
@@ -105,5 +111,10 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
+  }
+
+  private showDialog(message: string, duration: number = 1500) {
+
+    this.snacks.open(message, 'Dismiss', { duration: duration });
   }
 }

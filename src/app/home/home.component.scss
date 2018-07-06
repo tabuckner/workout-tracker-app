@@ -1,0 +1,42 @@
+$text-margin: 16px;
+
+.home {
+
+  text-align: center;
+
+  &__header {
+
+    &__title {
+      margin: 4vh auto;
+    }
+
+    &__subtitle {
+      margin-left: $text-margin;
+      margin-right: $text-margin;
+    }
+  }
+
+  &__hero {
+    margin: 8vh auto 8vh;
+
+    &__image {
+      width: 100%;
+    }
+  }
+
+  &__info{
+    margin-bottom: 4vh;
+
+    &__text {
+      margin-left: $text-margin;
+      margin-right: $text-margin;
+    }
+  }
+
+  &__message {
+
+    &__text {
+      opacity: .66;
+    }
+  }
+}

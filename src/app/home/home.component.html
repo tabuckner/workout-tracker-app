@@ -1,3 +1,22 @@
-<p>
-  home works!
-</p>
+<div class="home">
+  <div class="home__header">
+    <h1 class="mat-display-1 home__header__title">{{ greeting }}</h1>
+    <p class="mat-subheading-1 home__header__subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, vero!</p>
+  </div>
+  <div class="home__hero">
+    <img src="https://source.unsplash.com/1600x900/?workout,weights" alt="welcome image" class="home__hero__image">
+  </div>
+  <div class="home__info">
+    <p class="mat-body-2 home__info__text">
+      {{ qod.quote }}
+    </p>
+    <span class="mat-body-1 home__info_subtext" *ngIf="qod.author">
+      {{ qod.author }}
+    </span>
+  </div>
+  <div class="home__message">
+    <p class="mat-caption home__message__text">
+      Last Journal Entry: {{ lastJournalEntry }}
+    </p>
+  </div>
+</div>
