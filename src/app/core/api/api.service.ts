@@ -29,12 +29,14 @@ export class ApiService {
     return this.routinesUpdated.asObservable();
   }
 
-  getAllExercises() { // TODO: Is this getMyExercises?
+  getAllExercises(showDialog = true) { // TODO: Is this getMyExercises?
     const endpoint = `${this.baseUrl}/exercises`
     this.http.get<{ message: string, status: number, count: number, data: ExerciseResponse[] }>(endpoint)
       .subscribe((response) => {
-        const message = response.message;
-        this.showDialog(message);
+        if (showDialog) {
+          const message = response.message;
+          this.showDialog(message);
+        }
         const exercises: Exercise[] = response.data.map<Exercise>(e => {
           return {
             id: e._id,
@@ -72,12 +74,14 @@ export class ApiService {
       });
   }
 
-  getAllRoutines() { // TODO: Is this getMyRoutines?
+  getAllRoutines(showDialog = true) { // TODO: Is this getMyRoutines?
     const endpoint = `${this.baseUrl}/routines`
     this.http.get<{ message: string, status: number, count: number, data: RoutineResponse[] }>(endpoint)
       .subscribe((response) => {
-        const message = response.message;
-        this.showDialog(message);
+        if (showDialog) {
+          const message = response.message;
+          this.showDialog(message);
+        }
         const routines: Routine[] = response.data.map<Routine>(r => {
           return {
             id: r._id,
@@ -108,6 +112,11 @@ export class ApiService {
       });
   }
 
+  getRoutine(id: string) {
+    const endpoint = `${this.baseUrl}/routines/${id}`;
+    return this.http.get<{ message: string, status: number, data: RoutineResponse }>(endpoint);
+  }
+
   addRoutine(newRoutine: NewRoutine) {
     const endpoint = `${this.baseUrl}/routines`
 
@@ -122,6 +131,26 @@ export class ApiService {
         const error = err.error.message;
         this.showDialog(error);
       });
+  }
+
+  updateRoutine(id: string, newRoutine: NewRoutine) {
+    const endpoint = `${this.baseUrl}/routines/${id}`;
+    this.http.put<{ message: string, status: number, data: RoutineResponse }>(endpoint, newRoutine)
+    .subscribe(response => {
+      const message = response.message;
+      this.showDialog(message);;
+    });
+  }
+
+  deleteRoutine(id: string) {
+    const endpoint = `${this.baseUrl}/routines/${id}`;
+    this.http.delete<{message: string, status: number, data: any}>(endpoint)
+    .subscribe(response => {
+      const message = response.message;
+      this.showDialog(message);
+      this.getAllRoutines(false)
+      console.log(response);
+    });
   }
 
   private showDialog(message: string) { // TODO: Add an error snack that is styled differently.

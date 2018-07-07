@@ -16,6 +16,8 @@ export class NavComponent implements OnInit, OnDestroy {
   public createNewPath: string;
   public headerTitleSub: Subscription;
   public headerAddSub: Subscription;
+  public loggedIn: boolean;
+  public loggedInSub: Subscription;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -29,8 +31,10 @@ export class NavComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-   this.getHeaderTitleSub();
-   this.getAddButtonSub();
+    this.loggedIn = this.auth.getIsAuthenticated();
+    this.getHeaderTitleSub();
+    this.getAddButtonSub();
+    this.getLoggedInSub();
   }
 
   getCreateNewPath() {
@@ -39,9 +43,9 @@ export class NavComponent implements OnInit, OnDestroy {
 
   getHeaderTitleSub() {
     this.headerTitleSub = this.header.getHeaderTitleListener()
-    .subscribe(newTitle => {
-      this.reactiveTitle = newTitle
-    });
+      .subscribe(newTitle => {
+        this.reactiveTitle = newTitle
+      });
   }
 
   getAddButtonSub() {
@@ -58,9 +62,18 @@ export class NavComponent implements OnInit, OnDestroy {
     this.auth.logOut();
   }
 
+  private getLoggedInSub() {
+    this.loggedInSub = this.auth.getAuthStatusListener()
+      .subscribe(authStatus => {
+        console.log(authStatus);
+        this.loggedIn = authStatus;
+      })
+  }
+
   ngOnDestroy() {
     this.headerTitleSub.unsubscribe();
     this.headerAddSub.unsubscribe();
+    this.loggedInSub.unsubscribe();
   }
 
 }

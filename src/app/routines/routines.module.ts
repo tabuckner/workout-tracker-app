@@ -15,7 +15,7 @@ import { ExercisesModule } from '../exercises/exercises.module';
   ],
   declarations: [
     RoutineListComponent,
-    NewRoutineComponent
+    NewRoutineComponent,
   ]
 })
 export class RoutinesModule { }
