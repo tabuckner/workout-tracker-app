@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'routines/create', component: NewRoutineComponent }, // Add Lazy Routing to create component routes.
   { path: 'routines/:id', component: NewRoutineComponent }, // Add Lazy Routing to create component routes.
   { path: 'exercises', component: ExerciseListComponent },
-  { path: 'exercises/create', component: NewExerciseComponent } // Add Lazy Routing to create component routes.
+  { path: 'exercises/create', component: NewExerciseComponent }, // Add Lazy Routing to create component routes.
+  { path: 'exercises/:id', component: NewExerciseComponent } // Add Lazy Routing to create component routes.
 ]
 
 @NgModule({

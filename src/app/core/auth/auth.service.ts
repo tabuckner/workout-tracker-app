@@ -16,6 +16,7 @@ export class AuthService {
   private token: string;
   private authStatusListener = new Subject<boolean>();
   private tokenTimer: NodeJS.Timer;
+  private tokenWarningTimer: NodeJS.Timer;
 
   constructor(
     private http: HttpClient,
@@ -84,6 +85,12 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
   }
 
+  warnExpiredToken() {
+    const message = 'Your session will expire soon. Please save any work.';
+    this.showDialog(message, 10000);
+    clearTimeout(this.tokenTimer);
+  }
+
   private setAuthTimer(response: AuthResponse, expiryTime?: number) {
     if (!expiryTime) {
       this.tokenTimer = setTimeout(() => {
@@ -94,7 +101,20 @@ export class AuthService {
       this.tokenTimer = setTimeout(() => {
         this.logOut(); // FIXME: JWT Refreshes
         this.promptExpiredToken();
-      }, expiryTime); // Server returns an expiry *duration*
+      }, expiryTime);
+    }
+  }
+
+  private setAuthWarningTimer(warningWindowMin: number, response: AuthResponse, expiryTime?: number) {
+    const warningDuration = warningWindowMin * 60000;
+    if (!expiryTime) {
+      this.tokenWarningTimer = setTimeout(() => {
+        this.warnExpiredToken();
+      }, (response.expiresIn * 1000) - warningDuration); // Server returns an expiry *duration* of seconds (3600s => 1h)
+    } else if (expiryTime) {
+      this.tokenWarningTimer = setTimeout(() => {
+        this.warnExpiredToken();
+      }, expiryTime  - warningDuration);
     }
   }
 
@@ -145,6 +165,7 @@ export class AuthService {
       this.token = storedAuthData.token;
       this.userId = storedAuthData.userId;
       this.setAuthTimer(null, expiresIn);
+      this.setAuthWarningTimer(5, null, expiresIn);
     }
     const sessionExpiresMinutes = expiresIn / 1000 / 60;
     const message = `Your session will expire in roughly ${Math.floor(sessionExpiresMinutes) - 5} minutes.`;

@@ -3,6 +3,11 @@
     <mat-expansion-panel-header>
       {{ routine.name }}
     </mat-expansion-panel-header>
+    <ng-container *ngIf="routine.exercises.length < 1">
+      <div class="placeholder">
+        No Exercises on this Routine. Add some by tapping the 'Edit' button below!
+      </div>
+    </ng-container>
     <mat-list>
       <mat-list-item *ngFor="let exercise of routine.exercises">
         <span class="exercise-name">{{ exercise.name }}</span>

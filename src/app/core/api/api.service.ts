@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Routine, RoutineResponse, NewRoutine } from '../../shared/models/routine.model';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class ApiService {
 
   constructor(
     private http: HttpClient,
-    private snacks: MatSnackBar
+    private snacks: MatSnackBar,
+    private router: Router
   ) { }
 
   getexerciseUpdateListener() {
@@ -58,6 +60,12 @@ export class ApiService {
       });
   }
 
+  getExercise(id: string) {
+    const endpoint = `${this.baseUrl}/exercises/${id}`;
+
+    return this.http.get<{message: string, status: number, data: ExerciseResponse}>(endpoint);
+  }
+
   addExercise(newExercise: NewExercise) {
     const endpoint = `${this.baseUrl}/exercises`
 
@@ -68,10 +76,36 @@ export class ApiService {
         this.showDialog(message);
         const createdExercise = response.data;
         console.log(response);
+        this.router.navigate(['/exercises']);
       }, err => {
         const error = err.error.message;
         this.showDialog(error);
       });
+  }
+
+  updateExercise(id: string, newExercise: NewExercise) {
+    const endpoint = `${this.baseUrl}/exercises/${id}`;
+    this.http.put<{message: string, status: number, data: ExerciseResponse}>(endpoint, newExercise)
+      .subscribe(response => {
+        const message = response.message;
+        this.showDialog(message);
+        this.router.navigate(['/exercises']);
+      }, err => {
+        const error = err.error.message;
+        this.showDialog(error);
+      });
+  }
+
+  deleteExercise(id: string) {
+    const endpoint = `${this.baseUrl}/exercises/${id}`;
+
+    this.http.delete<{message: string, status: number, data: any}>(endpoint)
+    .subscribe(response => {
+      const message = response.message;
+      this.showDialog(message);
+      this.getAllExercises(false)
+      console.log(response);
+    });
   }
 
   getAllRoutines(showDialog = true) { // TODO: Is this getMyRoutines?
@@ -127,6 +161,7 @@ export class ApiService {
         this.showDialog(message);
         const createdExercise = response.data;
         console.log(response);
+        this.router.navigate(['/routines']);
       }, err => {
         const error = err.error.message;
         this.showDialog(error);
@@ -138,7 +173,11 @@ export class ApiService {
     this.http.put<{ message: string, status: number, data: RoutineResponse }>(endpoint, newRoutine)
     .subscribe(response => {
       const message = response.message;
-      this.showDialog(message);;
+      this.showDialog(message);
+      this.router.navigate(['/routines']);
+    }, err => {
+      const error = err.error.message;
+      this.showDialog(error);
     });
   }
 

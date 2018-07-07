@@ -37,10 +37,16 @@ ul {
   flex-wrap: wrap;
   font-size: .8rem;
   text-align: center;
-  margin-top: .75rem;
   opacity: .66;
 
   span {
     flex: 0 0 100%;
   }
+}
+
+.bottom-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: .75rem;
 }

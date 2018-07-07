@@ -20,8 +20,16 @@
       <span class="value">{{ exercise.weight }}</span>
     </mat-list-item>
   </mat-list>
-  <div class="date-info">
-    <span class="muted" *ngIf="exercise.createdAt">Created: {{ exercise.createdAt | date:'medium' }}</span>
-    <span class="muted" *ngIf="exercise.updatedAt">Updated: {{ exercise.updatedAt | date:'medium' }}</span>
+  <div class="bottom-row">
+    <button mat-icon-button (click)="onDeleteExercise(exercise.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <div class="date-info">
+      <span class="muted" *ngIf="exercise.createdAt">Created: {{ exercise.createdAt | date:'medium' }}</span>
+      <span class="muted" *ngIf="exercise.updatedAt">Updated: {{ exercise.updatedAt | date:'medium' }}</span>
+    </div>
+    <button mat-icon-button [routerLink]="['/exercises', exercise.id]">
+      <mat-icon>edit</mat-icon>
+    </button>
   </div>
 </mat-expansion-panel>
