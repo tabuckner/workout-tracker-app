@@ -41,6 +41,6 @@
   <mat-card-actions>
     <span class="spacer"></span>
     <button mat-button routerLink="/exercises">Cancel</button>
-    <button mat-raised-button color="accent" (click)="onSubmit()">Save</button>
+    <button mat-raised-button color="accent" (click)="onSubmit()" [disabled]="this.form.invalid">Save</button>
   </mat-card-actions>
 </mat-card>

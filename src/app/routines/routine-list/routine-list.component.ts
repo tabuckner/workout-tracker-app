@@ -35,7 +35,7 @@ export class RoutineListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.routines = fetchedRoutines;
         console.log(this.routines);
-      })
+      });
   }
 
   onDeleteRoutine(id: string) {

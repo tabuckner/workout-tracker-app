@@ -141,8 +141,8 @@ export class ApiService {
           [...this.routines]
         );
       }, err => {
-        const error = err.error.message;
-        this.showDialog(error);
+        console.log(err);
+        console.error(new Error(err))
       });
   }
 

@@ -45,7 +45,6 @@ export class NewRoutineComponent implements OnInit {
       name: this.form.value.name,
       exercises: this.choices.selectedOptions.selected.map(e => e.value)
     };
-    console.log(newRoutine);
     if (this.mode === 'create') {
       this.api.addRoutine(newRoutine);
     }
@@ -61,7 +60,6 @@ export class NewRoutineComponent implements OnInit {
       .subscribe((fetchedExercises: Exercise[]) => {
         this.isLoading = false;
         this.exercises = fetchedExercises;
-        console.log(this.exercises);
       })
   }
 

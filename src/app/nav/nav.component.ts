@@ -65,7 +65,6 @@ export class NavComponent implements OnInit, OnDestroy {
   private getLoggedInSub() {
     this.loggedInSub = this.auth.getAuthStatusListener()
       .subscribe(authStatus => {
-        console.log(authStatus);
         this.loggedIn = authStatus;
       })
   }
