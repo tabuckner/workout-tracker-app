@@ -10,16 +10,17 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.log(error);
-        if (error.status === 401) {
-          this.auth.collectFailedRequest(req);
-          this.auth.refreshTokens()
-          error.error.message = 'Please try again.';
-          return throwError(error)
-        }
-      })
-    );
+    return next.handle(req);
+    // return next.handle(req).pipe(
+    //   catchError((error: HttpErrorResponse) => {
+    //     console.log(error);
+    //     if (error.status === 401) {
+    //       this.auth.collectFailedRequest(req);
+    //       this.auth.refreshTokens()
+    //       error.error.message = 'Please try again.';
+    //       return throwError(error)
+    //     }
+    //   })
+    // );
   }
 }

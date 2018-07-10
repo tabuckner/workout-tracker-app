@@ -37,7 +37,7 @@ export class ApiService {
       .subscribe((response) => {
         if (showDialog) {
           const message = response.message;
-          this.showDialog(message);
+          this.showDialog(message); // FIXME: Queue these to avoid change errors?
         }
         const exercises: Exercise[] = response.data.map<Exercise>(e => {
           return {
@@ -63,7 +63,7 @@ export class ApiService {
   getExercise(id: string) {
     const endpoint = `${this.baseUrl}/exercises/${id}`;
 
-    return this.http.get<{message: string, status: number, data: ExerciseResponse}>(endpoint);
+    return this.http.get<{ message: string, status: number, data: ExerciseResponse }>(endpoint);
   }
 
   addExercise(newExercise: NewExercise) {
@@ -85,7 +85,7 @@ export class ApiService {
 
   updateExercise(id: string, newExercise: NewExercise) {
     const endpoint = `${this.baseUrl}/exercises/${id}`;
-    this.http.put<{message: string, status: number, data: ExerciseResponse}>(endpoint, newExercise)
+    this.http.put<{ message: string, status: number, data: ExerciseResponse }>(endpoint, newExercise)
       .subscribe(response => {
         const message = response.message;
         this.showDialog(message);
@@ -99,13 +99,13 @@ export class ApiService {
   deleteExercise(id: string) {
     const endpoint = `${this.baseUrl}/exercises/${id}`;
 
-    this.http.delete<{message: string, status: number, data: any}>(endpoint)
-    .subscribe(response => {
-      const message = response.message;
-      this.showDialog(message);
-      this.getAllExercises(false)
-      console.log(response);
-    });
+    this.http.delete<{ message: string, status: number, data: any }>(endpoint)
+      .subscribe(response => {
+        const message = response.message;
+        this.showDialog(message);
+        this.getAllExercises(false)
+        console.log(response);
+      });
   }
 
   getAllRoutines(showDialog = true) { // TODO: Is this getMyRoutines?
@@ -171,25 +171,25 @@ export class ApiService {
   updateRoutine(id: string, newRoutine: NewRoutine) {
     const endpoint = `${this.baseUrl}/routines/${id}`;
     this.http.put<{ message: string, status: number, data: RoutineResponse }>(endpoint, newRoutine)
-    .subscribe(response => {
-      const message = response.message;
-      this.showDialog(message);
-      this.router.navigate(['/routines']);
-    }, err => {
-      const error = err.error.message;
-      this.showDialog(error);
-    });
+      .subscribe(response => {
+        const message = response.message;
+        this.showDialog(message);
+        this.router.navigate(['/routines']);
+      }, err => {
+        console.log('err')
+        console.error(err);
+      });
   }
 
   deleteRoutine(id: string) {
     const endpoint = `${this.baseUrl}/routines/${id}`;
-    this.http.delete<{message: string, status: number, data: any}>(endpoint)
-    .subscribe(response => {
-      const message = response.message;
-      this.showDialog(message);
-      this.getAllRoutines(false)
-      console.log(response);
-    });
+    this.http.delete<{ message: string, status: number, data: any }>(endpoint)
+      .subscribe(response => {
+        const message = response.message;
+        this.showDialog(message);
+        this.getAllRoutines(false)
+        console.log(response);
+      });
   }
 
   private showDialog(message: string) { // TODO: Add an error snack that is styled differently.

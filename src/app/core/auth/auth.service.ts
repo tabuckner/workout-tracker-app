@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import { AuthResponse } from './AuthData.model';
 import { MatSnackBar } from '@angular/material';
 
@@ -27,6 +27,14 @@ export class AuthService {
     private router: Router,
     private snacks: MatSnackBar
   ) { }
+
+  getCachedRequests() {
+    return this.cachedRequests;
+  }
+
+  addFailedRequest(request) {
+    this.cachedRequests.push(request);
+  }
 
   getToken() {
     if (this.token) {
@@ -98,39 +106,51 @@ export class AuthService {
     this.showDialog(message);
   }
 
-  refreshTokens(): Observable<any> {
+  getRefreshedTokens() {
     const endpoint = `${this.baseUrl}/users/refresh`;
     const expiredToken = localStorage.getItem('token');
     const refreshToken = localStorage.getItem('refreshToken');
     if (!refreshToken || !expiredToken) {
-      return;
+      return of(null);
     }
     const body = { refreshToken };
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${expiredToken}`);
-    this.http.post<{ message: string, token: string, refreshToken: string, expiresIn: number, userId: string }>(endpoint, body, { headers })
-      .subscribe(response => {
-        if (response.token) {
+    return this.http.post<{ message: string, token: string, refreshToken: string, expiresIn: number, userId: string }>(endpoint, body, { headers });
+  }
+
+  refreshTokens() { // FIXME: Add error handling for non existant refreshToken
+    try {
+      this.getRefreshedTokens().subscribe(response => {
+        if (response !== null && response.token) {
           this.setNewTokens(response)
         } else {
           const message = 'Unable to re-authenticate automatically due to session inactivity. Please log in from the menu.';
-          this.showDialog(message, 5);
+          setTimeout(() => {
+            this.showDialog(message, 5000);
+          });
         }
       });
+    } catch (error) {
+      const message = 'Unable to log you in automatically. Please log in from the menu.';
+      this.showDialog(message, 5000);
+    }
   }
 
   setNewTokens(response: AuthResponse) {
     console.log('Setting new Auth Tokens');
-    const message = response.message;
-    this.showDialog(message);
-    this.setAuthData(response);
-    this.setAuthTimer(response);
-    this.setAuthWarningTimer(5, response);
-    this.setRefreshTokenDate();
-    this.isAuthenticated = true;
-    this.tokenExpired = false;
-    this.authStatusListener.next(true); // Notify observers.
-    this.storeAuthData(response);
+    if (response) {
+      const message = response.message;
+      this.showDialog(message);
+      this.setAuthData(response);
+      this.setAuthTimer(response);
+      this.setAuthWarningTimer(5, response);
+      this.setRefreshTokenDate();
+      this.isAuthenticated = true;
+      this.tokenExpired = false;
+      this.authStatusListener.next(true); // Notify observers.
+      this.storeAuthData(response);
+    }
   }
 
   promptExpiredToken() {
@@ -237,12 +257,10 @@ export class AuthService {
         this.authStatusListener.next(true); // TODO: Why do I have to wait for this next call to work?
         this.showDialog(message, 3000)
       }, 3000)
-    } else if (this.getRefreshTokenExpired() === false){
+    } else if (this.getRefreshTokenExpired() === false) {
       this.tokenExpired = true;
       const message = 'Your session token has expired. Attempting to refresh.';
-      setTimeout(() => {
-        this.showDialog(message, 3000);
-      });
+      this.showDialog(message, 3000);
       this.refreshTokens();
     }
   }
@@ -253,6 +271,8 @@ export class AuthService {
   }
 
   private showDialog(message: string, duration: number = 1500) {
-    this.snacks.open(message, 'Dismiss', { duration: duration });
+    setTimeout(() => {
+      this.snacks.open(message, 'Dismiss', { duration: duration });
+    });
   }
 }
