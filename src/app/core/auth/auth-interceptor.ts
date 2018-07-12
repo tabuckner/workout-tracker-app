@@ -6,6 +6,8 @@ import { catchError, mergeMap } from "rxjs/operators";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  maxRetryAttempts = 3;
+  attemptCount = 0;
 
   constructor(private auth: AuthService) { }
 
@@ -20,19 +22,23 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!refreshIsExpired) {
       return next.handle(this.addHeaderToken(req, this.auth.getToken())).pipe(
         catchError(error => {
-          if (error instanceof HttpErrorResponse && error.status === 401) {
+          if (error instanceof HttpErrorResponse && error.status === 401 && this.canRetry) {
+            this.attemptCount++;
             return this.auth.getRefreshedTokens().pipe(
               mergeMap((response) => {
                 if (response) {
                   this.auth.setNewTokens(response);
                   const authReqRepeat = this.addHeaderToken(req, response.token)
-                  console.log('Repeating request', authReqRepeat);
+                  console.warn('Repeating request', authReqRepeat);
                   return next.handle(authReqRepeat);
                 } else {
                   return throwError(new Error('There was an issue with your request. Please try logging in again.'));
                 }
               })
             )
+          } else if (!this.canRetry) {
+            this.attemptCount = 0;
+            return throwError(new Error('Max retry attempts achieved. Please try logging in again.'))
           }
           // Catch all
           return throwError(error);
@@ -48,6 +54,10 @@ export class AuthInterceptor implements HttpInterceptor {
     return req.clone({
       headers: req.headers.set('Authorization', `Bearer ${headerToken}`)
     });
+  }
+
+  get canRetry() {
+    return this.attemptCount <= this.maxRetryAttempts;
   }
 
 }

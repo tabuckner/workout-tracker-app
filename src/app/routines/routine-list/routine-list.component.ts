@@ -34,7 +34,6 @@ export class RoutineListComponent implements OnInit, OnDestroy {
       .subscribe((fetchedRoutines: Routine[]) => {
         this.isLoading = false;
         this.routines = fetchedRoutines;
-        console.log(this.routines);
       });
   }
 

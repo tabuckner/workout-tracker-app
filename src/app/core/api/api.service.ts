@@ -154,13 +154,11 @@ export class ApiService {
   addRoutine(newRoutine: NewRoutine) {
     const endpoint = `${this.baseUrl}/routines`
 
-    console.log(newRoutine);
     this.http.post<{ message: string, status: number, data: ExerciseResponse }>(endpoint, newRoutine)
       .subscribe(response => {
         const message = response.message;
         this.showDialog(message);
         const createdExercise = response.data;
-        console.log(response);
         this.router.navigate(['/routines']);
       }, err => {
         const error = err.error.message;
@@ -176,7 +174,6 @@ export class ApiService {
         this.showDialog(message);
         this.router.navigate(['/routines']);
       }, err => {
-        console.log('err')
         console.error(err);
       });
   }

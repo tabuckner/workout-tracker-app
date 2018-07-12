@@ -31,7 +31,6 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
       .subscribe((fetchedExercises: Exercise[]) => {
         this.isLoading = false;
         this.exercises = fetchedExercises;
-        console.log(this.exercises);
       })
   }
 

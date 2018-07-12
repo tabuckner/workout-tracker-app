@@ -138,7 +138,6 @@ export class AuthService {
   }
 
   setNewTokens(response: AuthResponse) {
-    console.log('Setting new Auth Tokens');
     if (response) {
       const message = response.message;
       this.showDialog(message);
@@ -168,11 +167,10 @@ export class AuthService {
 
   private setAuthTimer(response: AuthResponse, expiryTime?: number) {
     if (!expiryTime) {
-      console.log('Expires in ', response.expiresIn * 1000);
       this.tokenTimer = setTimeout(() => {
         // this.logOut(); // FIXME: JWT Refreshes
         this.promptExpiredToken();
-        console.log('expired');
+        console.warn('Auth token expired.');
       }, response.expiresIn * 1000); // Server returns an expiry *duration* of seconds (3600s => 1h)
     } else if (expiryTime) {
       this.tokenTimer = setTimeout(() => {
@@ -198,7 +196,6 @@ export class AuthService {
   private setRefreshTokenDate() {
     this.refreshTokenDate = new Date();
     this.refreshTokenDate.setDate(this.refreshTokenDate.getDate() + this.refreshTokenPeriod);
-    console.log(this.refreshTokenDate);
   }
 
   private setAuthData(response: AuthResponse) {
