@@ -14,6 +14,7 @@
       <a mat-list-item routerLink="/">Home</a>
       <a mat-list-item routerLink="/routines">My Routines</a>
       <a mat-list-item routerLink="/exercises">My Exercises</a>
+      <a mat-list-item routerLink="/journal">My Journal</a>
       <a mat-list-item *ngIf="!loggedIn" routerLink="/login">Log In</a>
       <a mat-list-item *ngIf="loggedIn" (click)="onLogOut()" class="logoff">Log Out</a>
     </mat-nav-list>

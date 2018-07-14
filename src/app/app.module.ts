@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { ExercisesModule } from './exercises/exercises.module';
 import { RoutinesModule } from './routines/routines.module';
+import { JournalModule } from './journal/journal.module';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
@@ -21,7 +22,7 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
   declarations: [
     AppComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +33,7 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
     SharedModule,
     ExercisesModule,
     RoutinesModule,
+    JournalModule,
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,

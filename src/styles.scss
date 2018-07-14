@@ -1,23 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-html, body, nav {
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+html,
+body,
+nav {
   height: 100%;
 }
 
-body { margin: 0; }
+body {
+  margin: 0;
+}
 
 .stats.mat-list-item {
-
   .mat-list-item-content {
     width: 100%;
   }
 }
 
 .routine-list.mat-accordion {
-
   .mat-list-item-content {
     justify-content: space-between;
   }
 }
 
+.journal-entry-list {
+  .mat-expansion-panel-header {
+    span.mat-content {
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

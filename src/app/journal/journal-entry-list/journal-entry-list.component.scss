@@ -1,0 +1,38 @@
+.journal-entry-list {
+  .mat-expansion-panel {
+    .small {
+      font-size: 12px;
+      margin-right: 16px;
+    }
+    .muted {
+      opacity: .66;
+    }
+  }
+}
+
+.exercise-name {
+  flex: 2;
+}
+
+.volumes {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  text-align: right;
+
+  span {
+    width: 100%;
+  }
+
+  .exercise-goal-volume {
+    opacity: .66;
+  }
+
+  .performance-volume {
+
+  }
+}
+
+.mat-action-row .spacer {
+  flex: 1;
+}

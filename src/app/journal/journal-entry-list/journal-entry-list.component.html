@@ -1,0 +1,35 @@
+<mat-accordion class="journal-entry-list">
+  <mat-expansion-panel *ngFor="let journalEntry of journalEntries">
+    <mat-expansion-panel-header>
+      {{ journalEntry.name }}
+      <span class="small muted">{{ journalEntry.createdAt | date:'short' }}</span>
+    </mat-expansion-panel-header>
+    <mat-list>
+      <mat-list-item *ngFor="let exercisePerformance of journalEntry.exercisePerformances">
+        <span class="exercise-name">{{ exercisePerformance.exercise.name }}</span>
+        <div class="volumes">
+          <span class="exercise-goal-volume">
+            <span class="sets">{{ exercisePerformance.exercise.sets }}</span>
+            x
+            <span class="reps">{{ exercisePerformance.exercise.reps }}</span>
+            x
+            <span class="weight">{{ exercisePerformance.exercise.weight }}</span>
+          </span>
+          <span class="performance-volume">
+            <span class="sets">{{ exercisePerformance.performance.sets }}</span>
+            x
+            <span class="reps">{{ exercisePerformance.performance.reps }}</span>
+            x
+            <span class="weight">{{ exercisePerformance.performance.weight }}</span>
+          </span>
+        </div>
+      </mat-list-item>
+    </mat-list>
+    <mat-action-row>
+      <button mat-icon-button (click)="onDeleteRoutine(routine.id)"><mat-icon>delete</mat-icon></button>
+      <span class="spacer"></span>
+      <!-- <button mat-button [routerLink]="['/routines', routine.id]">Edit</button> -->
+      <button mat-raised-button color="primary">Edit</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { Routine, RoutineResponse, NewRoutine } from '../../shared/models/routine.model';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { JournalEntryResponse, JournalEntry } from '../../shared/models/journal-entry.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class ApiService {
   private exercisesUpdated = new Subject<Exercise[]>();
   private routines: Routine[] = [];
   private routinesUpdated = new Subject<Routine[]>();
+  private journalEntries: JournalEntry[] = [];
+  private journalEntriesUpdated = new Subject<JournalEntry[]>();
 
   constructor(
     private http: HttpClient,
@@ -29,6 +32,10 @@ export class ApiService {
 
   getRoutineUpdateListener() {
     return this.routinesUpdated.asObservable();
+  }
+
+  getJournalEntryUpdateListener() {
+    return this.journalEntriesUpdated.asObservable();
   }
 
   getAllExercises(showDialog = true) { // TODO: Is this getMyExercises?
@@ -187,6 +194,35 @@ export class ApiService {
         this.getAllRoutines(false)
         console.log(response);
       });
+  }
+
+  getAllJournalEntries(showDialog = true) {
+    const endpoint = `${this.baseUrl}/journal`;
+    this.http.get<{message: string, status: number, count: number, data: JournalEntryResponse[]}>(endpoint)
+    .subscribe(response => {
+      if (showDialog) {
+        const message = response.message;
+        this.showDialog(message); // FIXME: Queue these to avoid change errors?
+      }
+      const journalEntries: JournalEntry[] = response.data.map<JournalEntry>(je => {
+        return {
+          id: je._id,
+          name: je.baseRoutine.name,
+          baseRoutine: je.baseRoutine,
+          exercisePerformances: je.exercisePerformances,
+          creator: je.creator,
+          createdAt: je.created_at,
+          updatedAt: je.updated_at
+        }
+      });
+      this.journalEntries = journalEntries;
+      this.journalEntriesUpdated.next(
+        [...this.journalEntries]
+      );
+    }, err => {
+      const error = err.error.message;
+      this.showDialog(error);
+    });
   }
 
   private showDialog(message: string) { // TODO: Add an error snack that is styled differently.
