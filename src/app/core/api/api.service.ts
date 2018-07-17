@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { Routine, RoutineResponse, NewRoutine } from '../../shared/models/routine.model';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { JournalEntryResponse, JournalEntry } from '../../shared/models/journal-entry.model';
+import { JournalEntryResponse, JournalEntry, ExercisePerformance } from '../../shared/models/journal-entry.model';
 
 @Injectable({
   providedIn: 'root'
@@ -204,12 +204,27 @@ export class ApiService {
         const message = response.message;
         this.showDialog(message); // FIXME: Queue these to avoid change errors?
       }
-      const journalEntries: JournalEntry[] = response.data.map<JournalEntry>(je => {
+      const journalEntries: JournalEntry[] = response.data.map<JournalEntry>((je) => {
         return {
           id: je._id,
           name: je.baseRoutine.name,
-          baseRoutine: je.baseRoutine,
-          exercisePerformances: je.exercisePerformances,
+          baseRoutine: {
+            id: je.baseRoutine._id,
+            name: je.baseRoutine.name
+          },
+          exercisePerformances: je.exercisePerformances.map(ep => {
+            return {
+              id: ep._id,
+              exercise: {
+                id : ep.exercise._id,
+                name: ep.exercise.name,
+                sets: ep.exercise.sets,
+                reps: ep.exercise.reps,
+                weight: ep.exercise.weight
+              },
+              performance: ep.performance
+            } as ExercisePerformance
+          }),
           creator: je.creator,
           createdAt: je.created_at,
           updatedAt: je.updated_at

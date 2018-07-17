@@ -3,7 +3,13 @@ import { Exercise } from "./exercise.model";
 
 export class ExercisePerformancesResponse {
   _id: string;
-  exercise: string;
+  exercise: {
+    _id: string;
+    name: string;
+    sets: number;
+    reps: number;
+    weight: number;
+  };
   performance: {
     sets: number;
     reps: number;
@@ -16,7 +22,7 @@ export class JournalEntryResponse {
   baseRoutine: {
     _id: string;
     name: string;
-  }
+  };
   exercisePerformances: ExercisePerformancesResponse[];
   creator: string;
   created_at?: string;
@@ -37,7 +43,10 @@ export class ExercisePerformance {
 export class JournalEntry {
   id: string;
   name: string;
-  baseRoutine: Routine;
+  baseRoutine: {
+    id: string;
+    name: string;
+  };
   exercisePerformances: ExercisePerformance[];
   creator: string;
   createdAt?: string;
