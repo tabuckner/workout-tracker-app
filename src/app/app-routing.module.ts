@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'exercises/create', component: NewExerciseComponent }, // Add Lazy Routing to create component routes.
   { path: 'exercises/:id', component: NewExerciseComponent }, // Add Lazy Routing to create component routes.
   { path: 'journal', component: JournalEntryListComponent }, // Add Lazy Routing to create component routes.
-  { path: 'journal/create', component: NewJournalEntryComponent }, // Add Lazy Routing to create component routes.
+  { path: 'journal/:id/create', component: NewJournalEntryComponent }, // Add Lazy Routing to create component routes.
   // { path: 'journal/:id', component: NewJournalEntryComponent }, // Add Lazy Routing to create component routes.
 
 ]

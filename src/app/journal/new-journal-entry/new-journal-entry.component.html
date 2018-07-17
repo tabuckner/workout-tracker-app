@@ -1,3 +1,42 @@
-<p>
-  new-journal-entry works!
-</p>
+<form [formGroup]="form" class="journal-entry">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <ng-container *ngIf="!isLoading">
+    <div class="journal-entry__title">
+      <h2 class="mat-title">{{ this.activeRoutine.name }}</h2>
+      <h3 class="mat-subheading-1">Last Updated: {{ this.activeRoutine.updatedAt | date:'medium'}}</h3>
+    </div>
+    <mat-vertical-stepper>
+      <mat-step *ngFor="let exercise of this.activeRoutine.exercises">
+        <ng-template matStepLabel>{{ exercise.name }}</ng-template>
+        <ng-container *ngFor="let x of exercise.sets | times">
+          <div class="set">
+            <div class="set__title">
+              <span class="set__title--number">Set {{ x }}</span>
+              <span class="set__title--goal">Goal {{ exercise.reps }} @ {{ exercise.weight }}</span>
+            </div>
+            <div class="set__performance">
+              <div class="set__performance--spacer"></div>
+              <mat-form-field>
+                  <input
+                    type="tel"
+                    formControlName="{{ exercise.id + '-set-' + x + '-reps' }}"
+                    placeholder="Reps"
+                    matInput>
+                  <mat-error *ngIf="form.get(exercise.id + '-set-' + x + '-reps').invalid">Please enter a number of reps.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input
+                    type="tel"
+                    formControlName="{{ exercise.id + '-set-' + x + '-weight' }}"
+                    placeholder="Weight"
+                    matInput>
+                  <mat-error *ngIf="form.get(exercise.id + '-set-' + x + '-reps').invalid">Please enter a weight to be used.</mat-error>
+                </mat-form-field>
+            </div>
+          </div>
+
+        </ng-container>
+      </mat-step>
+    </mat-vertical-stepper>
+  </ng-container>
+</form>

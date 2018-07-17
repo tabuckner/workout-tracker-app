@@ -24,7 +24,7 @@
       <button mat-icon-button (click)="onDeleteRoutine(routine.id)"><mat-icon>delete</mat-icon></button>
       <span class="spacer"></span>
       <button mat-button [routerLink]="['/routines', routine.id]">Edit</button>
-      <button mat-raised-button color="primary">Start</button>
+      <button mat-raised-button color="primary" [routerLink]="['/journal', routine.id, 'create']">Start</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

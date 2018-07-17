@@ -1,0 +1,47 @@
+.journal-entry {
+
+  &__title {
+    padding-top: 8px;
+    text-align: center;
+
+    .mat-title {
+      margin-bottom: 0;
+    }
+
+    .mat-subheading-1 {
+      margin-bottom: 8px;
+      opacity: .66;
+    }
+  }
+
+  .set {
+    margin-top: 8px;
+
+    &__title {
+      display: flex;
+      margin-bottom: .5rem;
+      justify-content: space-between;
+      font-weight: 500;
+
+      &--number {}
+
+      &--goal {
+        font-size: .85rem;
+        opacity: .33;
+      }
+    }
+
+    &__performance {
+      display: flex;
+
+      &--spacer {
+        flex: 1;
+      }
+
+      .mat-form-field {
+        flex: 1;
+        margin: 0 16px;
+      }
+    }
+  }
+}
