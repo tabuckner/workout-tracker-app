@@ -26,10 +26,21 @@
 
   .exercise-goal-volume {
     opacity: .66;
+    display: flex;
+    justify-content: space-between;
   }
 
   .performance-volume {
+    display: flex;
+    justify-content: space-between;
+  }
 
+  .sets {
+    text-align: center;
+  }
+
+  .separator {
+    text-align: center;
   }
 }
 

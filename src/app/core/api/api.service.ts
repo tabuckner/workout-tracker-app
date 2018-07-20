@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { Routine, RoutineResponse, NewRoutine } from '../../shared/models/routine.model';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { JournalEntryResponse, JournalEntry, ExercisePerformance } from '../../shared/models/journal-entry.model';
+import { JournalEntryResponse, JournalEntry, ExercisePerformance, NewJournalEntry, CreatedJournalEntryResponse } from '../../shared/models/journal-entry.model';
 
 @Injectable({
   providedIn: 'root'
@@ -222,7 +222,14 @@ export class ApiService {
                 reps: ep.exercise.reps,
                 weight: ep.exercise.weight
               },
-              performance: ep.performance
+              performance: ep.performance.map(sp => {
+                return {
+                  id: sp._id,
+                  set: sp.set,
+                  reps: sp.reps,
+                  weight: sp.weight
+                }
+              })
             } as ExercisePerformance
           }),
           creator: je.creator,
@@ -238,6 +245,27 @@ export class ApiService {
       const error = err.error.message;
       this.showDialog(error);
     });
+  }
+
+  addJournalEntry(newJournalEntry: NewJournalEntry) {
+    const endpoint = `${this.baseUrl}/journal`
+
+    console.log('Received in API Service', newJournalEntry);
+    this.http.post<{ message: string, status: number, data: CreatedJournalEntryResponse }>(endpoint, newJournalEntry)
+      .subscribe(response => {
+        const message = response.message;
+        this.showDialog(message);
+        const CreatedJournalEntryResponse = response.data;
+        console.log(response);
+        // this.router.navigate(['/exercises']);
+      }, err => {
+        const error = err.error.message;
+        if (err) {
+          this.showDialog(error);
+        } else {
+          this.showDialog(err);
+        }
+      });
   }
 
   private showDialog(message: string) { // TODO: Add an error snack that is styled differently.

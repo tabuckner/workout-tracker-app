@@ -10,11 +10,14 @@ export class ExercisePerformancesResponse {
     reps: number;
     weight: number;
   };
-  performance: {
-    sets: number;
-    reps: number;
-    weight: number;
-  }
+  performance: [
+    {
+      _id: string;
+      set: number;
+      reps: number;
+      weight: number;
+    }
+  ]
 }
 
 export class JournalEntryResponse {
@@ -33,11 +36,14 @@ export class JournalEntryResponse {
 export class ExercisePerformance {
   id: string;
   exercise: Exercise;
-  performance: {
-    sets: number; // Optional?
-    reps: number; // Optional?
-    weight: number; // Optional?
-  }
+  performance: [ // TODO: Fix this
+    {
+      id: string;
+      set: number; // Optional?
+      reps: number; // Optional?
+      weight: number; // Optional?
+    }
+  ]
 }
 
 export class JournalEntry {
@@ -54,7 +60,28 @@ export class JournalEntry {
   v?: number;
 }
 
+export class NewSetPerformance {
+  set: number;
+  reps: number;
+  weight: number;
+}
+
+export class NewExercisePerformance {
+  exercise: string; // Exercise ID
+  performance: NewSetPerformance[];
+}
+
 export class NewJournalEntry {
-  // name: string;
-  // exercises: string[]; // Array of IDs
+  baseRoutine: string;
+  exercisePerformances: NewExercisePerformance[];
+}
+
+export class CreatedJournalEntryResponse {
+  _id: string;
+  baseRoutine: string;
+  exercisePerformances: ExercisePerformancesResponse[];
+  creator: string;
+  created_at?: string;
+  updated_at?: string;
+  __v?: number;
 }

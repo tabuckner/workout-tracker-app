@@ -6,7 +6,7 @@
       <h3 class="mat-subheading-1">Last Updated: {{ this.activeRoutine.updatedAt | date:'medium'}}</h3>
     </div>
     <mat-vertical-stepper>
-      <mat-step *ngFor="let exercise of this.activeRoutine.exercises">
+      <mat-step *ngFor="let exercise of this.activeRoutine.exercises; let i = index">
         <ng-template matStepLabel>{{ exercise.name }}</ng-template>
         <ng-container *ngFor="let x of exercise.sets | times">
           <div class="set">
@@ -19,23 +19,29 @@
               <mat-form-field>
                   <input
                     type="tel"
-                    formControlName="{{ exercise.id + '-set-' + x + '-reps' }}"
+                    formControlName="{{ exercise.id + '-' + x + '-reps' }}"
                     placeholder="Reps"
                     matInput>
-                  <mat-error *ngIf="form.get(exercise.id + '-set-' + x + '-reps').invalid">Please enter a number of reps.</mat-error>
+                  <mat-error *ngIf="form.get(exercise.id + '-' + x + '-reps').invalid">Please enter a number of reps.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                   <input
                     type="tel"
-                    formControlName="{{ exercise.id + '-set-' + x + '-weight' }}"
+                    formControlName="{{ exercise.id + '-' + x + '-weight' }}"
                     placeholder="Weight"
                     matInput>
-                  <mat-error *ngIf="form.get(exercise.id + '-set-' + x + '-reps').invalid">Please enter a weight to be used.</mat-error>
+                  <mat-error *ngIf="form.get(exercise.id + '-' + x + '-reps').invalid">Please enter a weight to be used.</mat-error>
                 </mat-form-field>
             </div>
           </div>
-
         </ng-container>
+        <div class="action-row">
+          <button
+            mat-raised-button
+            color="accent"
+            *ngIf="i + 1 === this.activeRoutine.exercises.length"
+            (click)="onSubmit()">Submit</button>
+        </div>
       </mat-step>
     </mat-vertical-stepper>
   </ng-container>

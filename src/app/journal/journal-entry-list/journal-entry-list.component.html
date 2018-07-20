@@ -8,19 +8,19 @@
       <mat-list-item *ngFor="let exercisePerformance of journalEntry.exercisePerformances">
         <span class="exercise-name">{{ exercisePerformance.exercise.name }}</span>
         <div class="volumes">
+          <!-- GOAL -->
           <span class="exercise-goal-volume">
-            <span class="sets">{{ exercisePerformance.exercise.sets }}</span>
-            x
-            <span class="reps">{{ exercisePerformance.exercise.reps }}</span>
-            x
-            <span class="weight">{{ exercisePerformance.exercise.weight }}</span>
+            <ng-container *ngFor="let x of exercisePerformance.exercise.sets | times; let i=index">
+              <span class="sets">{{ exercisePerformance.exercise.reps }}</span>
+              <span class="separator" *ngIf="x !== exercisePerformance.exercise.sets">&middot;</span>
+            </ng-container>
           </span>
+          <!-- ACTUAL -->
           <span class="performance-volume">
-            <span class="sets">{{ exercisePerformance.performance.sets }}</span>
-            x
-            <span class="reps">{{ exercisePerformance.performance.reps }}</span>
-            x
-            <span class="weight">{{ exercisePerformance.performance.weight }}</span>
+            <ng-container *ngFor="let set of exercisePerformance.performance; let i = index;">
+              <span class="sets">{{ set.reps }}</span>
+              <span class="separator" *ngIf="i + 1 !== exercisePerformance.performance.length">&middot;</span>
+            </ng-container>
           </span>
         </div>
       </mat-list-item>
