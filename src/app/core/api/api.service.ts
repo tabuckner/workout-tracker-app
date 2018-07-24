@@ -255,12 +255,30 @@ export class ApiService {
       .subscribe(response => {
         const message = response.message;
         this.showDialog(message);
-        const CreatedJournalEntryResponse = response.data;
+        const createdJournalEntryResponse = response.data;
         console.log(response);
         // this.router.navigate(['/exercises']);
       }, err => {
         const error = err.error.message;
         if (err) {
+          this.showDialog(error);
+        } else {
+          this.showDialog(err);
+        }
+      });
+  }
+
+  deleteJournalEntry(id: string) {
+    const endpoint = `${this.baseUrl}/journal/${id}`;
+
+    this.http.delete<{ message: string, status: number, data: CreatedJournalEntryResponse }>(endpoint)
+      .subscribe(response => {
+        const message = response.message;
+        this.showDialog(message);
+        this.getAllJournalEntries(false);
+      }, err => {
+        const error = err.error.message;
+        if (error) {
           this.showDialog(error);
         } else {
           this.showDialog(err);

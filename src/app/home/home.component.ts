@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   greeting: string = 'Workout Tracker';
   lastJournalEntry: string = 'Unknown';
   qod: {quote: string, author?: string} = {quote: 'Tap the menu above to get started. Track your progression with Journal Entries of your routines!'}
-  imgBusy = false;
+  imageLoading = true;
 
   constructor(
     private header: HeaderService,
@@ -33,6 +33,11 @@ export class HomeComponent implements OnInit {
         return;
       }
     });
+  }
+
+  imageLoaded() {
+    console.log('loaded');
+    this.imageLoading = false;
   }
 
 }

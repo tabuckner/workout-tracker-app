@@ -38,6 +38,7 @@ export class JournalEntryListComponent implements OnInit {
 
   onDeleteJournalEntry(id: string) {
     console.warn(`You've requested to delete ${id}`);
+    this.api.deleteJournalEntry(id);
   }
 
 }

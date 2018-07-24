@@ -4,7 +4,8 @@
     <p class="mat-subheading-1 home__header__subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, vero!</p>
   </div>
   <div class="home__hero">
-    <img src="https://source.unsplash.com/1600x900/?workout,weights" alt="welcome image" class="home__hero__image">
+    <img *ngIf="imageLoading" class="home__hero__placeholder" src="assets/placeholder.png">
+    <img  [src]="'https://source.unsplash.com/1600x900/?workout,weights'" (load)="imageLoaded()" alt="welcome image" class="home__hero__image">
   </div>
   <div class="home__info">
     <p class="mat-body-2 home__info__text">

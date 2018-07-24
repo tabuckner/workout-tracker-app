@@ -18,6 +18,20 @@ $text-margin: 16px;
 
   &__hero {
     margin: 8vh auto 8vh;
+    min-width: 100%;
+
+    &__placeholder {
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: infinite;
+      animation-name: placeHolderShimmer;
+      animation-timing-function: linear;
+      background: #f6f7f8;
+      background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+      background-size: 936px;
+      animation: placeHolderShimmer 2s ease-in-out infinite;
+      width: 100%;
+    }
 
     &__image {
       width: 100%;
@@ -38,5 +52,14 @@ $text-margin: 16px;
     &__text {
       opacity: .66;
     }
+  }
+}
+
+@keyframes placeHolderShimmer{
+  0%{
+      background-position: -468px 0
+  }
+  100%{
+      background-position: 468px 0
   }
 }

@@ -1,30 +1,33 @@
-<mat-accordion class="routine-list">
-  <mat-expansion-panel *ngFor="let routine of routines">
-    <mat-expansion-panel-header>
-      {{ routine.name }}
-    </mat-expansion-panel-header>
-    <ng-container *ngIf="routine.exercises.length < 1">
-      <div class="placeholder">
-        No Exercises on this Routine. Add some by tapping the 'Edit' button below!
-      </div>
-    </ng-container>
-    <mat-list>
-      <mat-list-item *ngFor="let exercise of routine.exercises">
-        <span class="exercise-name">{{ exercise.name }}</span>
-        <span class="exercise-volume">
-          <span class="sets">{{ exercise.sets }}</span>
-          x
-          <span class="reps">{{ exercise.reps }}</span>
-          x
-          <span class="weight">{{ exercise.weight }}</span>
-        </span>
-      </mat-list-item>
-    </mat-list>
-    <mat-action-row>
-      <button mat-icon-button (click)="onDeleteRoutine(routine.id)"><mat-icon>delete</mat-icon></button>
-      <span class="spacer"></span>
-      <button mat-button [routerLink]="['/routines', routine.id]">Edit</button>
-      <button mat-raised-button color="primary" [routerLink]="['/journal', routine.id, 'create']">Start</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<ng-container *ngIf="!isLoading">
+  <mat-accordion class="routine-list">
+    <mat-expansion-panel *ngFor="let routine of routines">
+      <mat-expansion-panel-header>
+        {{ routine.name }}
+      </mat-expansion-panel-header>
+      <ng-container *ngIf="routine.exercises.length < 1">
+        <div class="placeholder">
+          No Exercises on this Routine. Add some by tapping the 'Edit' button below!
+        </div>
+      </ng-container>
+      <mat-list>
+        <mat-list-item *ngFor="let exercise of routine.exercises">
+          <span class="exercise-name">{{ exercise.name }}</span>
+          <span class="exercise-volume">
+            <span class="sets">{{ exercise.sets }}</span>
+            x
+            <span class="reps">{{ exercise.reps }}</span>
+            x
+            <span class="weight">{{ exercise.weight }}</span>
+          </span>
+        </mat-list-item>
+      </mat-list>
+      <mat-action-row>
+        <button mat-icon-button (click)="onDeleteRoutine(routine.id)"><mat-icon>delete</mat-icon></button>
+        <span class="spacer"></span>
+        <button mat-button [routerLink]="['/routines', routine.id]">Edit</button>
+        <button mat-raised-button color="primary" [routerLink]="['/journal', routine.id, 'create']">Start</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-container>

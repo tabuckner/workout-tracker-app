@@ -11,6 +11,11 @@ body {
   margin: 0;
 }
 
+.mat-spinner {
+  margin: auto;
+  margin-top: calc(50vh - 100px);
+}
+
 .stats.mat-list-item {
   .mat-list-item-content {
     width: 100%;
@@ -37,5 +42,20 @@ body {
     .mat-form-field-infix {
       width: auto;
     }
+  }
+}
+
+.uh-oh {
+  max-height: 100vh;
+  width: 100vw;
+  text-align: center;
+  padding-top: 2rem;
+
+  img {
+    height: 33vh;
+  }
+
+  &__text {
+    margin: 4rem 2rem 2rem;
   }
 }

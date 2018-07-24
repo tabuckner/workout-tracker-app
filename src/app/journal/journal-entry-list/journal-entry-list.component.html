@@ -1,35 +1,43 @@
-<mat-accordion class="journal-entry-list">
-  <mat-expansion-panel *ngFor="let journalEntry of journalEntries">
-    <mat-expansion-panel-header>
-      {{ journalEntry.name }}
-      <span class="small muted">{{ journalEntry.createdAt | date:'short' }}</span>
-    </mat-expansion-panel-header>
-    <mat-list>
-      <mat-list-item *ngFor="let exercisePerformance of journalEntry.exercisePerformances">
-        <span class="exercise-name">{{ exercisePerformance.exercise.name }}</span>
-        <div class="volumes">
-          <!-- GOAL -->
-          <span class="exercise-goal-volume">
-            <ng-container *ngFor="let x of exercisePerformance.exercise.sets | times; let i=index">
-              <span class="sets">{{ exercisePerformance.exercise.reps }}</span>
-              <span class="separator" *ngIf="x !== exercisePerformance.exercise.sets">&middot;</span>
-            </ng-container>
-          </span>
-          <!-- ACTUAL -->
-          <span class="performance-volume">
-            <ng-container *ngFor="let set of exercisePerformance.performance; let i = index;">
-              <span class="sets">{{ set.reps }}</span>
-              <span class="separator" *ngIf="i + 1 !== exercisePerformance.performance.length">&middot;</span>
-            </ng-container>
-          </span>
-        </div>
-      </mat-list-item>
-    </mat-list>
-    <mat-action-row>
-      <button mat-icon-button (click)="onDeleteRoutine(routine.id)"><mat-icon>delete</mat-icon></button>
-      <span class="spacer"></span>
-      <!-- <button mat-button [routerLink]="['/routines', routine.id]">Edit</button> -->
-      <button mat-raised-button color="primary">Edit</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<ng-container *ngIf="!isLoading">
+  <mat-accordion class="journal-entry-list" *ngIf="journalEntries.length > 0">
+    <mat-expansion-panel *ngFor="let journalEntry of journalEntries">
+      <mat-expansion-panel-header>
+        {{ journalEntry.name }}
+        <span class="small muted">{{ journalEntry.createdAt | date:'short' }}</span>
+      </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let exercisePerformance of journalEntry.exercisePerformances">
+          <span class="exercise-name">{{ exercisePerformance.exercise.name }}</span>
+          <div class="volumes">
+            <!-- GOAL -->
+            <span class="exercise-goal-volume">
+              <ng-container *ngFor="let x of exercisePerformance.exercise.sets | times; let i=index">
+                <span class="sets">{{ exercisePerformance.exercise.reps }}</span>
+                <span class="separator" *ngIf="x !== exercisePerformance.exercise.sets">&middot;</span>
+              </ng-container>
+            </span>
+            <!-- ACTUAL -->
+            <span class="performance-volume">
+              <ng-container *ngFor="let set of exercisePerformance.performance; let i = index;">
+                <span class="sets">{{ set.reps }}</span>
+                <span class="separator" *ngIf="i + 1 !== exercisePerformance.performance.length">&middot;</span>
+              </ng-container>
+            </span>
+          </div>
+        </mat-list-item>
+      </mat-list>
+      <mat-action-row>
+        <button mat-icon-button (click)="onDeleteJournalEntry(journalEntry.id)"><mat-icon>delete</mat-icon></button>
+        <span class="spacer"></span>
+        <!-- <button mat-button [routerLink]="['/routines', routine.id]">Edit</button> -->
+        <button mat-raised-button color="primary">Edit</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div class="uh-oh" *ngIf="!journalEntries || journalEntries.length < 1">
+    <div class="uh-oh__header mat-display-2">Whoops!</div>
+    <img src="assets/sad_tear.png" class="uh-oh__image">
+    <p class="uh-oh__text mat-subheading-1">Looks like you don't have any Journal Entries yet. Start a routine to write a new Journal Entry!</p>
+  </div>
+</ng-container>

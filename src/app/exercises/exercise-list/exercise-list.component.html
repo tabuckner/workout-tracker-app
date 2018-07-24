@@ -1,4 +1,5 @@
-<mat-accordion>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-accordion *ngIf="!isLoading">
   <ng-container *ngFor="let exercise of exercises">
     <app-exercise-list-item [exercise]="exercise"></app-exercise-list-item>
   </ng-container>
