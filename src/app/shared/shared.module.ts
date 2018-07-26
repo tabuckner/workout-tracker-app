@@ -4,6 +4,7 @@ import { MatButtonModule, MatToolbarModule, MatIconModule, MatExpansionModule, M
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { TimesPipe } from './pipes/times.pipe';
+import { TimerComponent } from './timer/timer.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { TimesPipe } from './pipes/times.pipe';
   ],
   declarations: [
     ConfirmDialogComponent,
-    TimesPipe
+    TimesPipe,
+    TimerComponent
   ],
 })
 export class SharedModule { }

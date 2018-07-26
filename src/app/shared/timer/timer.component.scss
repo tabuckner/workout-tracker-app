@@ -1,0 +1,22 @@
+.progress-spinners {
+  position: relative;
+
+  .timer-bg {
+    position: absolute;
+    z-index: 1;
+
+    circle {
+      stroke: gray;
+    }
+  }
+
+  .timer-primary {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .timer-warn {
+    position: absolute;
+    z-index: 3;
+  }
+}

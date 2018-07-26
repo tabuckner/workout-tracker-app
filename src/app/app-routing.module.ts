@@ -8,6 +8,7 @@ import { NewRoutineComponent } from './routines/new-routine/new-routine.componen
 import { LogInComponent } from './core/login/login.component';
 import { JournalEntryListComponent } from './journal/journal-entry-list/journal-entry-list.component';
 import { NewJournalEntryComponent } from './journal/new-journal-entry/new-journal-entry.component';
+import { TimerComponent } from './shared/timer/timer.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'journal', component: JournalEntryListComponent }, // Add Lazy Routing to create component routes.
   { path: 'journal/:id/create', component: NewJournalEntryComponent }, // Add Lazy Routing to create component routes.
   // { path: 'journal/:id', component: NewJournalEntryComponent }, // Add Lazy Routing to create component routes.
+  { path: 'timer', component: TimerComponent }, // Add Lazy Routing to create component routes.
 
 ]
 

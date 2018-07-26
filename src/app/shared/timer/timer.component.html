@@ -1,0 +1,9 @@
+<p>
+  timer works!
+  <span [style.color]="restExceeded ? 'red' : 'initial'">timer: {{ timeRemaining }}</span>
+</p>
+<div class="progress-spinners">
+  <mat-progress-spinner class="timer-bg" mode="determinate" [value]="100"></mat-progress-spinner>
+  <mat-progress-spinner *ngIf="!restExceeded" class="timer-primary" mode="determinate" [value]="timerProgress"></mat-progress-spinner>
+  <mat-progress-spinner *ngIf="restExceeded" class="timer-warn" mode="indeterminate" color="warn"></mat-progress-spinner>
+</div>
