@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { TimesPipe } from './pipes/times.pipe';
 import { TimerComponent } from './timer/timer.component';
+import { MinuteSecondsPipe } from './pipes/seconds.pipe';
+import { TimerDialogComponent } from './timer/timer-dialog/timer-dialog.component';
 
 @NgModule({
   imports: [
@@ -44,7 +46,9 @@ import { TimerComponent } from './timer/timer.component';
   declarations: [
     ConfirmDialogComponent,
     TimesPipe,
-    TimerComponent
+    MinuteSecondsPipe,
+    TimerComponent,
+    TimerDialogComponent
   ],
 })
 export class SharedModule { }

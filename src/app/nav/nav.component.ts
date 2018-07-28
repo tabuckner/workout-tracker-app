@@ -4,6 +4,8 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HeaderService } from '../core/header/header.service';
 import { AuthService } from '../core/auth/auth.service';
+import { MatDialog } from '@angular/material';
+import { TimerDialogComponent } from '../shared/timer/timer-dialog/timer-dialog.component';
 
 @Component({
   selector: 'nav',
@@ -13,9 +15,11 @@ import { AuthService } from '../core/auth/auth.service';
 export class NavComponent implements OnInit, OnDestroy {
   public reactiveTitle: string = 'Workout Tracker'
   public showAddButton: boolean = false;
+  public showOpenTimer: boolean = false;
   public createNewPath: string;
   public headerTitleSub: Subscription;
   public headerAddSub: Subscription;
+  public headerShowTimerSub: Subscription;
   public loggedIn: boolean;
   public loggedInSub: Subscription;
 
@@ -27,7 +31,8 @@ export class NavComponent implements OnInit, OnDestroy {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private header: HeaderService,
-    private auth: AuthService
+    private auth: AuthService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -35,6 +40,7 @@ export class NavComponent implements OnInit, OnDestroy {
     this.getHeaderTitleSub();
     this.getAddButtonSub();
     this.getLoggedInSub();
+    this.getOpenTimerSub();
   }
 
   getCreateNewPath() {
@@ -56,6 +62,19 @@ export class NavComponent implements OnInit, OnDestroy {
           this.createNewPath = `${e.which}/create`
         }
       })
+  }
+
+  getOpenTimerSub() {
+    this.headerShowTimerSub = this.header.getShowOpenTimerListener()
+      .subscribe(bool => {
+        this.showOpenTimer = bool;
+      });
+  }
+
+  onOpenTimer() {
+    const dialogRef = this.dialog.open(TimerDialogComponent, {
+      width: '90%'
+    });
   }
 
   onLogOut() {

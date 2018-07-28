@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthInterceptor } from './core/auth/auth-interceptor';
 import { ErrorInterceptor } from './core/auth/error-interceptor';
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
+import { TimerDialogComponent } from './shared/timer/timer-dialog/timer-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,9 @@ import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.c
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmDialogComponent]
+  entryComponents: [
+    ConfirmDialogComponent,
+    TimerDialogComponent
+  ]
 })
 export class AppModule { }

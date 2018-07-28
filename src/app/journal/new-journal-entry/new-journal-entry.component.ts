@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApiService } from '../../core/api/api.service';
@@ -6,13 +6,14 @@ import { Routine } from '../../shared/models/routine.model';
 import { Exercise } from '../../shared/models/exercise.model';
 import { NewJournalEntry, NewExercisePerformance, NewSetPerformance } from '../../shared/models/journal-entry.model';
 import { empty } from 'rxjs';
+import { HeaderService } from '../../core/header/header.service';
 
 @Component({
   selector: 'app-new-journal-entry',
   templateUrl: './new-journal-entry.component.html',
   styleUrls: ['./new-journal-entry.component.scss']
 })
-export class NewJournalEntryComponent implements OnInit {
+export class NewJournalEntryComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public form: FormGroup;
   public mode: string = 'create';
@@ -21,12 +22,14 @@ export class NewJournalEntryComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private header: HeaderService
   ) { }
 
   ngOnInit() {
     this.initializeBlankForm();
     this.getModeAndInfo();
+    this.header.setShowOpenTimer({ show: true });
   }
 
   initializeBlankForm() {
@@ -59,6 +62,10 @@ export class NewJournalEntryComponent implements OnInit {
       console.warn('Edit Mode Requested, API Does not yet support this.');
       // this.api.updateRoutine(this.activeRoutineId, newRoutine);
     }
+  }
+
+  ngOnDestroy() {
+    this.header.setShowOpenTimer({ show: false });
   }
 
   private getModeAndInfo() {
